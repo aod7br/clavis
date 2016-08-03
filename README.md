@@ -1,2 +1,66 @@
-# clavis
-desafio de programacao clavis
+Solução do desafio Clavis
+=========================
+
+01/08/2016
+
+Como encontrei uma boa biblioteca para a API charts do google no python e a do perl não funcionou, vou desenvolver em python.
+
+Vamos chamar a aplicação de chart\_CVE.py
+
+O objetivo é receber uma lista de CVEs e buscar as informações com GETs em https://web.nvd.nist.gov/view/vuln/detail?vulnId=\*. Depois de parsear a pagina, vou armazenar as informacoes em um array.
+
+|                                     |
+|-------------------------------------|
+| python chart\_CVE.py lista\_CVE.txt |
+
+O arquivo TXT com a lista de CVE tera o seguinte formato (um CVE em cada linha):
+
+|               |
+|:--------------|
+| CVE-2016-5511 |
+| CVE-2016-5512 |
+| CVE-2016-5513 |
+| CVE-2016-5514 |
+| CVE-2016-5515 |
+
+Como output, o programa ira gerar 4 arquivos graficos:
+
+-   chartV2.png
+-   chartV3.png
+-   barV2.png
+-   barV3.png
+
+E um arquivo contendo a tabela de CVEs contendo os seguintes dados:
+
+-   tabela.csv
+    ----------
+
+    CVE\_NUMBER, CVSSV2\_SCORE, CVSSV2\_IMPACT, CSSV2\_EXPLOITABILITY, CVSSV3\_SCORE, CVSSV3\_IMPACT, CSSV3\_EXPLOITABILITY
+    -----------------------------------------------------------------------------------------------------------------------
+
+Instalação
+----------
+
+Assumo que o python versão 2.6 ou 2.7 está instalado, e o instalador de pacotes do python, 'pip', também está. Para executar o request GET usarei a 'urllib2' do python, ela é padrão na versão 2.X.
+
+Vamos instalar o modulo para fazer o parse na página, este é um módulo que já usei para fazer 'crawlers':
+
+|                 |
+|:----------------|
+| pip install bs4 |
+
+E o modulo para acessar a API do google (https://github.com/gak/pygooglechart/tree/master/examples). Eu rodei os exemplos deste módulo e funcionaram perfeitamente.
+
+|                           |
+|:--------------------------|
+| pip install pygooglechart |
+
+Fuçando até achei uma lista de CVEs para download aqui: https://cve.mitre.org/data/downloads/allitems.csv Baixei e gerei uma lista de teste com 10 items:
+
+|                                                                          |
+|-------------------------------------------------------------------------:|
+|  cut -d, -f1 &lt; allitems.csv | tail -2000 | head -10 &gt;lista\_CVE.txt|
+
+NOTE: Terminei o script, mas quando a lista de CVE é muito grande o grafico de barras fica confuso.
+
+Andre Oliveira Dias <aod7br@gmail.com>
