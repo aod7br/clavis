@@ -11,7 +11,7 @@ Vamos chamar a aplicação de chart\_CVE.py
 O objetivo é receber uma lista de CVEs e buscar as informações com GETs
 em
 [https://web.nvd.nist.gov/view/vuln/detail?vulnId=\*](https://web.nvd.nist.gov/view/vuln/detail?vulnId=*).
-Depois de parsear a pagina, vou armazenar as informacoes em um array.
+Depois de parsear a pagina, vou armazenar as informacoes em um array. Execute o programa assim:
 
     python chart_CVE.py lista_CVE.txt
 
