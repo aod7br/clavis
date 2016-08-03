@@ -98,10 +98,13 @@ def main():
     barv2_labels=[]
     barv3_data=[]
     barv3_labels=[]
+    piev2_data=[0,0,0,0]
+    piev3_data=[0,0,0,0]
     for cve in cve_list:
         url='https://web.nvd.nist.gov/view/vuln/detail?vulnId=%s' % cve
         try:
             extracted_data=parse_nist_page( url )
+
             (CVSSV2_SCORE, CVSSV2_IMPACT, CVSSV2_EXPLOITABILITY,
             CVSSV3_SCORE, CVSSV3_IMPACT, CVSSV3_EXPLOITABILITY)=extracted_data
             tabela.append( [cve]+extracted_data )
@@ -112,6 +115,36 @@ def main():
             barv3_data += [ float(CVSSV3_IMPACT), float(CVSSV3_EXPLOITABILITY) ]
             barv3_labels += [ '', cve ]
 
+            score=float(CVSSV2_SCORE)
+            if (score<=3.9):
+                # Low (3.9)
+                print "low"
+                piev2_data[0]+=1
+            elif (score<=6.9):
+                #Medium (6.9),
+                piev2_data[1]+=1
+            elif (score<=8.9):
+                #High (8.9)
+                piev2_data[2]+=1
+            else:
+                #Critical (10.0)
+                piev2_data[3]+=1
+
+            score=float(CVSSV3_SCORE)
+            if (score<=3.9):
+                # Low (3.9)
+                print "low"
+                piev3_data[0]+=1
+            elif (score<=6.9):
+                #Medium (6.9),
+                piev3_data[1]+=1
+            elif (score<=8.9):
+                #High (8.9)
+                piev3_data[2]+=1
+            else:
+                #Critical (10.0)
+                piev3_data[3]+=1
+
         except Exception, e:
             print "[%s] %s" % (e,url)
 
@@ -121,9 +154,9 @@ def main():
     bar_chart_cve( barv3_data, barv3_labels , 'output/barV3.png',
          'CVE-Impacto-Exploitabilidade V3' )
 
-    #pie_chart_cve([10, 10, 30, 200], 'chartV2.png', 'CVE-CVSS V2 acumulado')
+    pie_chart_cve( piev2_data, 'output/chartV2.png', 'CVE-CVSS V2 acumulado' )
 
-    #pie_chart_cve([2, 13, 23, 120], 'chartV3.png', 'CVE-CVSS V3 acumulado')
+    pie_chart_cve( piev3_data, 'output/chartV3.png', 'CVE-CVSS V3 acumulado' )
 
     create_cve_csv( 'output/tabela.csv', tabela)
 
