@@ -64,3 +64,4 @@ Fuçando até achei uma lista de CVEs para download aqui: https://cve.mitre.org/
 NOTE: Terminei o script, mas quando a lista de CVE é muito grande o grafico de barras fica confuso.
 
 Andre Oliveira Dias <aod7br@gmail.com>
+
